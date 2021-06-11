@@ -1,0 +1,40 @@
+version: "3.1"
+services:
+  backend:
+    container_name: backend
+    build:
+       context: .
+       target: development
+    command: yarn start:dev
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    env_file:
+      - .env
+    networks:
+       - webnet
+  db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_PASSWORD: my_password
+      POSTGRES_DB: my_db
+      POSTGRES_USER: my_user
+    ports:
+      - 5432:5432
+  db-test:
+    image: postgres:13.3
+    environment:
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: test
+      POSTGRES_USER: test
+    ports:
+      - 5433:5432
+
+networks:
+  webnet:
+
+volumes:
+  api-db:
