@@ -9,12 +9,12 @@ const config: ConnectionOptions = {
   username: 'my_user',
   password: 'my_password',
   database: 'my_db',
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  entities: ['../**/*.entity{.ts,.js}'],
   synchronize: false,
-  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+  migrations: ['../**/migrations/*{.ts,.js}'],
   cli: {
     migrationsDir: 'src/db/migrations',
   },
 };
 
-export config;
+export default config;
