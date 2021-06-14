@@ -9,9 +9,9 @@ const config: ConnectionOptions = {
   username: 'my_user',
   password: 'my_password',
   database: 'my_db',
-  entities: ['../**/*.entity{.ts,.js}'],
+  entities: ['./dist/**/*.entity.js'],
   synchronize: false,
-  migrations: ['../**/migrations/*{.ts,.js}'],
+  migrations: ['./dist/**/migrations/*.js'],
   cli: {
     migrationsDir: 'src/db/migrations',
   },
