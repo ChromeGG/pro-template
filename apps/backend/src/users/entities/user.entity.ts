@@ -1,7 +1,6 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-// @Entity({ database: "secondDB", schema: "public" })
-@Entity()
+@Entity({ name: 'users' })
 export class UserEntity extends BaseEntity {
   // @PrimaryGeneratedColumn({type: uuid})
   @PrimaryGeneratedColumn()
@@ -9,4 +8,7 @@ export class UserEntity extends BaseEntity {
 
   @Column()
   name: string;
+
+  @Column()
+  email: string;
 }
