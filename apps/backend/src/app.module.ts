@@ -11,12 +11,13 @@ import config from './config/ormconfig';
 
 const ENV = process.env.NODE_ENV;
 
+console.log(ENV)
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      // TODO FIX IT
-      envFilePath: !ENV ? '.env' : `.env.${ENV}`,
-    }),
+    // ConfigModule.forRoot({
+    //   // TODO FIX IT
+    //   envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
+    // }),
     TypeOrmModule.forRoot(config),
     UsersModule,
   ],
