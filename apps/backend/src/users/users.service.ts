@@ -6,7 +6,6 @@ import { UserEntity } from './entities/user.entity';
 @Injectable()
 export class UsersService {
   async create(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const userEntity: UserEntity = new UserEntity();
     userEntity.email = createUserDto.email;
     userEntity.name = createUserDto.name;

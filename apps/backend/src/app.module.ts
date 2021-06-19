@@ -7,18 +7,17 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 
-import config from './config/ormconfig';
+import { config as typeOrmConfig } from './config/ormconfig';
 
 const ENV = process.env.NODE_ENV;
 
-console.log(ENV)
 @Module({
   imports: [
-    // ConfigModule.forRoot({
-    //   // TODO FIX IT
-    //   envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
-    // }),
-    TypeOrmModule.forRoot(config),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
+    }),
+    TypeOrmModule.forRootAsync(typeOrmConfig),
     UsersModule,
   ],
   controllers: [AppController],
