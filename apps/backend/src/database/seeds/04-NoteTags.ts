@@ -1,4 +1,4 @@
-import { knex, Knex } from 'knex';
+import * as Knex from 'knex';
 import { NoteTagModel } from '../models/note-tag.model';
 
 export async function seed(knex: Knex): Promise<any> {

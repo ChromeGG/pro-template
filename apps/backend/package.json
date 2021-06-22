@@ -33,7 +33,7 @@
     "class-validator": "0.13.1",
     "dotenv": "10.0.0",
     "helmet": "4.6.0",
-    "knex": "0.95.6",
+    "knex": "0.21.17",
     "objection": "2.2.15",
     "pg": "8.6.0",
     "reflect-metadata": "0.1.13",

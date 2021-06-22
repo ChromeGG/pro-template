@@ -1,5 +1,5 @@
 import { Global, Module } from '@nestjs/common';
-import { knex as xdd, Knex } from 'knex';
+import * as Knex from 'knex';
 import { knexSnakeCaseMappers, Model } from 'objection';
 import { TagModel } from './models/tag.model';
 import { NoteModel } from './models/note.model';
@@ -20,7 +20,7 @@ const providers = [
   {
     provide: 'KnexConnection',
     useFactory: async () => {
-      const knex = xdd({
+      const knex = Knex({
         client: 'pg',
         connection: process.env.DATABASE_URL,
         debug: process.env.KNEX_DEBUG === 'true',

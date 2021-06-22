@@ -1,4 +1,4 @@
-import { knex, Knex } from 'knex';
+import * as Knex from 'knex';
 
 const tableName = 'note_tags';
 

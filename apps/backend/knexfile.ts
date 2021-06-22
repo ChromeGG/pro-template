@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { knex, Knex } from 'knex';
+import * as Knex from 'knex';
 import { knexSnakeCaseMappers } from 'objection';
 
 module.exports = {
