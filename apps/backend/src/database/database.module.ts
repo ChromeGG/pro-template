@@ -21,8 +21,15 @@ const providers = [
     provide: 'KnexConnection',
     useFactory: async () => {
       const knex = Knex({
+        // TODO move it to config
         client: 'pg',
-        connection: process.env.DATABASE_URL,
+        connection: {
+          port: parseInt(process.env.DB_PORT),
+          host: process.env.DB_HOST,
+          database: process.env.DB_DATABASE,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASSWORD,
+        },
         debug: process.env.KNEX_DEBUG === 'true',
         ...knexSnakeCaseMappers(),
       });

@@ -13,10 +13,10 @@ const ENV = process.env.NODE_ENV;
       isGlobal: true,
       envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
     }),
+    DatabaseModule,
     TagsModule,
     ThemesModule,
     NotesModule,
-    DatabaseModule,
   ],
 })
 export class ApplicationModule {}
