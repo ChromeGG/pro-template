@@ -14,6 +14,7 @@ export class NoteModel extends BaseModel {
 
   static relationMappings = {
     theme: {
+      // TODO check with import {} from
       modelClass: `${__dirname}/theme.model`,
       relation: Model.BelongsToOneRelation,
       join: {

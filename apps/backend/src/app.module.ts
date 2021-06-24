@@ -4,6 +4,7 @@ import { TagsModule } from './tags/tags.module';
 import { ThemesModule } from './themes/themes.module';
 import { NotesModule } from './notes/notes.module';
 import { DatabaseModule } from './database/database.module';
+import { UsersModule } from './users/users.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -17,6 +18,7 @@ const ENV = process.env.NODE_ENV;
     TagsModule,
     ThemesModule,
     NotesModule,
+    UsersModule,
   ],
 })
 export class ApplicationModule {}
