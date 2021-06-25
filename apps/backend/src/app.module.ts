@@ -6,6 +6,7 @@ import { NotesModule } from './notes/notes.module';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller';
 
 const ENV = process.env.NODE_ENV;
 
@@ -17,10 +18,11 @@ const ENV = process.env.NODE_ENV;
     }),
     DatabaseModule,
     UsersModule,
+    AuthModule,
     TagsModule,
     ThemesModule,
     NotesModule,
-    AuthModule,
   ],
+  controllers: [AppController],
 })
 export class ApplicationModule {}

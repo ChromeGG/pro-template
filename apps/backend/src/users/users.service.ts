@@ -3,6 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserModel } from '../database/models/user.model';
 import { ModelClass, transaction } from 'objection';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +14,9 @@ export class UsersService {
   // }
 
   async create(createUserDto: CreateUserDto) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
+    createUserDto.password = hashedPassword;
     return await UserModel.query().insert(createUserDto);
   }
 
@@ -24,12 +28,8 @@ export class UsersService {
     return `This action returns a #${id} user`;
   }
 
-  async findByFirstName(firstName: string) {
-    const user = await UserModel.query().findOne({ firstName });
-
-    console.log(user);
-    return user;
-    // return `This action returns a #${id} user`;
+  async findByEmail(email: string) {
+    return UserModel.query().findOne({ email });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

@@ -8,23 +8,23 @@ import {
 
 export class CreateUserDto {
   @IsEmail()
-  readonly email: string;
+  email: string;
 
   @IsString()
   @MinLength(3)
   @MaxLength(30)
-  readonly firstName: string;
+  firstName: string;
 
   @IsString()
   @MinLength(3)
   @MaxLength(30)
-  readonly lastName: string;
+  lastName: string;
 
   @IsString()
   @MinLength(8)
   @MaxLength(80)
-  readonly password: string;
+  password: string;
 
   @IsBoolean()
-  readonly isAdmin: boolean;
+  isAdmin: boolean;
 }
