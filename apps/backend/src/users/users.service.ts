@@ -29,7 +29,8 @@ export class UsersService {
   }
 
   async findByEmail(email: string) {
-    return UserModel.query().findOne({ email });
+    const user = await UserModel.query().findOne({ email });
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {

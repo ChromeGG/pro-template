@@ -12,12 +12,15 @@ export class AuthService {
 
   async validateUser(email: string, pass: string): Promise<any> {
     const user = await this.userService.findByEmail(email);
-    console.log(email, pass)
+    console.log(pass, user.password);
+    console.log(
+      'AuthSer-> validateUser',
+      await bcrypt.compare(pass, user.password),
+    );
     if (user && (await bcrypt.compare(pass, user.password))) {
       const { password, ...result } = user;
       return result;
     }
-
     return null;
   }
 
@@ -27,6 +30,7 @@ export class AuthService {
   }
 
   async login(user: any): Promise<any> {
+    // TODO FIX it
     const payload = { email: user.email, id: user.userId };
 
     return {
