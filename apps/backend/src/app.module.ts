@@ -5,6 +5,7 @@ import { ThemesModule } from './themes/themes.module';
 import { NotesModule } from './notes/notes.module';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 const ENV = process.env.NODE_ENV;
 
@@ -15,10 +16,11 @@ const ENV = process.env.NODE_ENV;
       envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
     }),
     DatabaseModule,
+    UsersModule,
     TagsModule,
     ThemesModule,
     NotesModule,
-    UsersModule,
+    AuthModule,
   ],
 })
 export class ApplicationModule {}

@@ -13,7 +13,7 @@ import { TagModel } from '../database/models/tag.model';
 
 @Controller('tags')
 export class TagsController {
-  constructor(private tagsService: TagsService) {}
+  constructor(private readonly tagsService: TagsService) {}
 
   @Get()
   async findAll() {
