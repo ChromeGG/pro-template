@@ -19,7 +19,7 @@
     "test:cov": "NODE_ENV=test jest --coverage",
     "test:debug": "NODE_ENV=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
-    "test:db:migrate": "NODE_CONFIG_ENV=test npm run knex migrate:latest",
+    "test:db:migrate": "NODE_ENV=test npm run knex migrate:latest",
     "knex": "knex --knexfile knexfile.ts"
   },
   "dependencies": {
@@ -74,6 +74,7 @@
     "typescript": "4.2.3"
   },
   "jest": {
+    "globalSetup": "<rootDir>/setupTests.ts",
     "moduleFileExtensions": [
       "js",
       "json",

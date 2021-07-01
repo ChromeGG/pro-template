@@ -21,10 +21,10 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findByEmail(@Query('email') email: string) {
-    return this.usersService.findByEmail(email);
-  }
+  // @Get()
+  // findByEmail(@Query('email') email: string) {
+  //   return this.usersService.findByEmail(email);
+  // }
 
   @Get(':id')
   findOne(@Param('id') id: string) {

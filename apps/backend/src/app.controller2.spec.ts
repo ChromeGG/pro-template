@@ -1,11 +1,11 @@
 // import { Test, TestingModule } from '@nestjs/testing';
 // import { AppController } from './app.controller';
 // import { AppService } from './app.service';
+
 // import { setupUnit } from '../test/setup';
 
 // setupUnit();
-
-describe('AppController', () => {
+describe('AppController 2', () => {
   // let appController: AppController;
 
   // beforeEach(async () => {
@@ -17,13 +17,14 @@ describe('AppController', () => {
   //   appController = app.get<AppController>(AppController);
   // });
 
-  describe('root', () => {
-    it('first test"', () => {
-      console.log('first test body');
+  describe('root 2', () => {
+    it('first test 2"', () => {
+      console.log('fist test body 2');
+
     });
 
-    it('second test', () => {
-      console.log('second test body');
+    it('second test 2', () => {
+      console.log('second test body 2');
     });
   });
 });
