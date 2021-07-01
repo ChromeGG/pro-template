@@ -4,5 +4,9 @@ export class BaseModel extends Model {
   readonly id: number;
 
   readonly createdAt: Date;
-  readonly updatedAt: Date;
+  updatedAt: Date;
+
+  $beforeUpdate() {
+    this.updatedAt = new Date();
+  }
 }

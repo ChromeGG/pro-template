@@ -25,4 +25,4 @@ const ENV = process.env.NODE_ENV;
   ],
   controllers: [AppController],
 })
-export class ApplicationModule {}
+export class AppModule {}

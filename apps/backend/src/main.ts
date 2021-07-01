@@ -1,13 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import * as helmet from 'helmet';
-import { ApplicationModule } from './app.module';
+import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 // TODO Fix it
 // import * as csurf from 'csurf';
 
 async function bootstrap() {
-  const app = await NestFactory.create(ApplicationModule, { cors: true });
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.use(cookieParser());
   // app.use(csurf());
   app.use(helmet());
