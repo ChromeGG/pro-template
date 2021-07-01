@@ -1,6 +1,12 @@
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
 import * as Knex from 'knex';
 import { knexSnakeCaseMappers } from 'objection';
+
+const ENV = process.env.NODE_ENV;
+
+const envFileName = ENV === 'production' ? '.env' : `.env.${ENV}`;
+
+dotenv.config({ path: __dirname + '/' + envFileName });
 
 module.exports = {
   client: 'pg',
