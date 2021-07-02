@@ -3,6 +3,7 @@ import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
+
 // TODO Fix it
 // import * as csurf from 'csurf';
 
@@ -13,6 +14,7 @@ async function bootstrap() {
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix('v1');
+  // TODO use process.env.APP_PORT here
   await app.listen(3000);
 }
 bootstrap();

@@ -2,37 +2,47 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
+import { initKnex } from '../src/database/knex.provider';
 
 describe('UsersController (e2e)', () => {
   let app: INestApplication;
-  let connection;
+  let testingConnection;
+  let testingTransaction;
 
   beforeAll(async () => {
+    // 1. ręcznie tworze sobie knex providera TUTAJ
+    // 2. zaczynam mu transakcje
+    // 3. wsadzam tę transakcję do Test.createTestingModule({})
+    // 4. Tam to jest jakoś dynamicznie rozkminiane i przekazywane do innych serwisów
+    //                                               (jeśli nie podano to stwórz knexa)
+
+    testingConnection = await initKnex(); // coś w tym stylu
+    testingTransaction = await testingConnection.startTransaction();
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
-    connection = app.get('KnexConnection').getKnex();
+    // connection = app.get('KnexConnection').getKnex();
 
-    console.log(connection.getKnex());
+    // console.log(connection.getKnex());
 
-    await connection.table('users').insert([
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@doe.com',
-        password: 'asd',
-        isAdmin: true,
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Donald',
-        email: 'jane@donald.com',
-        password: 'asd',
-        isAdmin: false,
-      },
-    ]);
+    // await connection.table('users').insert([
+    //   {
+    //     firstName: 'John',
+    //     lastName: 'Doe',
+    //     email: 'john@doe.com',
+    //     password: 'asd',
+    //     isAdmin: true,
+    //   },
+    //   {
+    //     firstName: 'Jane',
+    //     lastName: 'Donald',
+    //     email: 'jane@donald.com',
+    //     password: 'asd',
+    //     isAdmin: false,
+    //   },
+    // ]);
 
     // console.log(users);
 
@@ -40,8 +50,8 @@ describe('UsersController (e2e)', () => {
   });
 
   afterAll(async () => {
-    await trx.rollback();
-    connection.destroy();
+    await testingTransaction.rollback();
+    testingConnection.destroy();
     await app.close();
   });
 

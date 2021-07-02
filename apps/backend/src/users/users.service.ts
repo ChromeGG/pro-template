@@ -2,14 +2,25 @@ import { Injectable, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserModel } from '../database/models/user.model';
-import { ModelClass, transaction } from 'objection';
+import { ModelClass } from 'objection';
+
 import * as bcrypt from 'bcrypt';
+import Knex from 'knex';
 
 @Injectable()
 export class UsersService {
   // Example with DI
-  // constructor(@Inject('UserModel') private modelClass: ModelClass<UserModel>) {}
-  // create(props: Partial<TagModel>) {
+  constructor(
+    @Inject('UserModel') private modelClass: ModelClass<UserModel>,
+    // @Inject('KnexConnection') private knex,
+  ) {}
+
+  // constructor(
+  //   private noteTagsService: NoteTagsService,
+  //   @Inject('NoteModel') private modelClass: ModelClass<NoteModel>,
+  // ) {}
+
+  // create(props: Partial<UserModel>) {
   //   return this.modelClass.query().insert(props).returning('*');
   // }
 
