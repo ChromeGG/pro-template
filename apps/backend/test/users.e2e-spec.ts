@@ -1,6 +1,5 @@
 import * as request from 'supertest';
-import { app, testingTransaction as db } from './jestGlobalSetup';
-import { Tester } from './helpers/index';
+import { app, Tester, testingTransaction as db } from './jestGlobalSetup';
 
 describe('UsersController (e2e)', () => {
   describe('/users (GET)', () => {
@@ -51,6 +50,34 @@ describe('UsersController (e2e)', () => {
           photoPath: null,
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
+        },
+      ]);
+
+      const inDb = await Tester.grabFromDb(db, 'users');
+
+      expect(inDb).toEqual([
+        {
+          id: expect.any(String),
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'john@doe.com',
+          isAdmin: true,
+          // TODO remove it
+          password: expect.any(String),
+          photoPath: null,
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
+        },
+        {
+          id: expect.any(String),
+          firstName: 'Jane',
+          lastName: 'Donald',
+          email: 'jane@donald.com',
+          isAdmin: false,
+          password: expect.any(String),
+          photoPath: null,
+          createdAt: expect.any(Date),
+          updatedAt: expect.any(Date),
         },
       ]);
     });

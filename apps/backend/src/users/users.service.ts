@@ -23,7 +23,6 @@ export class UsersService {
   // }
 
   async create(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
     createUserDto.password = hashedPassword;
