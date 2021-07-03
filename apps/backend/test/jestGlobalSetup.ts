@@ -7,6 +7,7 @@ import { INestApplication } from '@nestjs/common';
 export let app: INestApplication;
 let testingConnection;
 export let testingTransaction;
+export { Tester } from './helpers/index';
 
 beforeAll(async () => {
   testingConnection = await initKnex();

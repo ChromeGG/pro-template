@@ -1,5 +1,6 @@
 import * as request from 'supertest';
 import { app, testingTransaction as db } from './jestGlobalSetup';
+import { Tester } from './helpers/index';
 
 describe('UsersController (e2e)', () => {
   describe('/users (GET)', () => {
@@ -8,24 +9,21 @@ describe('UsersController (e2e)', () => {
     });
 
     it('returns 2 users', async () => {
-      // await Tester.hasUser({});
-      // await Tester.hasUser({});
-      await db.table('users').insert([
-        {
-          firstName: 'John',
-          lastName: 'Doe',
-          email: 'john@doe.com',
-          password: 'asd',
-          isAdmin: true,
-        },
-        {
-          firstName: 'Jane',
-          lastName: 'Donald',
-          email: 'jane@donald.com',
-          password: 'asd',
-          isAdmin: false,
-        },
-      ]);
+      await Tester.hasUser({
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@doe.com',
+        password: 'asd',
+        isAdmin: true,
+      });
+
+      await Tester.hasUser({
+        firstName: 'Jane',
+        lastName: 'Donald',
+        email: 'jane@donald.com',
+        password: 'asd',
+        isAdmin: false,
+      });
 
       const results = await request(app.getHttpServer()).get('/users');
 
@@ -37,7 +35,8 @@ describe('UsersController (e2e)', () => {
           lastName: 'Doe',
           email: 'john@doe.com',
           isAdmin: true,
-          password: 'asd',
+          // TODO remove it
+          password: expect.any(String),
           photoPath: null,
           createdAt: expect.any(String),
           updatedAt: expect.any(String),
@@ -48,7 +47,7 @@ describe('UsersController (e2e)', () => {
           lastName: 'Donald',
           email: 'jane@donald.com',
           isAdmin: false,
-          password: 'asd',
+          password: expect.any(String),
           photoPath: null,
           createdAt: expect.any(String),
           updatedAt: expect.any(String),

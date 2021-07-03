@@ -1,19 +1,17 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Optional } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserModel } from '../database/models/user.model';
 import { ModelClass } from 'objection';
 
 import * as bcrypt from 'bcrypt';
-import Knex from 'knex';
 
 @Injectable()
 export class UsersService {
   // Example with DI
-  constructor(
-    @Inject('UserModel') private modelClass: ModelClass<UserModel>,
-    // @Inject('KnexConnection') private knex,
-  ) {}
+  // constructor(
+  //    @Inject('UserModel') private modelClass: ModelClass<UserModel>, // @Inject('KnexConnection') private knex,
+  // ) {}
 
   // constructor(
   //   private noteTagsService: NoteTagsService,
@@ -25,6 +23,7 @@ export class UsersService {
   // }
 
   async create(createUserDto: CreateUserDto) {
+    console.log(createUserDto);
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
     createUserDto.password = hashedPassword;
