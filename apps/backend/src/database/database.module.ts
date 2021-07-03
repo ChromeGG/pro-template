@@ -15,7 +15,11 @@ const modelProviders = models.map((model) => {
   };
 });
 
-const providers = [...modelProviders];
+const providers: any = [...modelProviders];
+
+if (process.env.NODE_ENV !== 'test') {
+  providers.push(knexProvider);
+}
 
 @Global()
 @Module({

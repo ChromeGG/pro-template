@@ -17,6 +17,10 @@ export const initKnex = async () => {
     ...knexSnakeCaseMappers(),
   });
 
+  if (process.env.NODE_ENV !== 'test') {
+    Model.knex(knex);
+  }
+
   return {
     getKnex() {
       if (trx) {
