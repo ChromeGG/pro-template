@@ -11,37 +11,26 @@ describe('UsersController (e2e)', () => {
   let testingTransaction;
 
   beforeAll(async () => {
-    testingConnection = await initKnex(); // coś w tym stylu
-    testingTransaction = await testingConnection.startTransaction();
-    Model.knex(testingTransaction);
+    testingConnection = await initKnex();
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
 
-    await testingTransaction.table('users').insert([
-      {
-        firstName: 'John',
-        lastName: 'Doe',
-        email: 'john@doe.com',
-        password: 'asd',
-        isAdmin: true,
-      },
-      {
-        firstName: 'Jane',
-        lastName: 'Donald',
-        email: 'jane@donald.com',
-        password: 'asd',
-        isAdmin: false,
-      },
-    ]);
-
     await app.init();
+  });
+  beforeEach(async () => {
+    testingTransaction = await testingConnection.startTransaction();
+    Model.knex(testingTransaction);
+  });
+
+  afterEach(async () => {
+    await testingTransaction.rollback();
   });
 
   afterAll(async () => {
-    await testingTransaction.rollback();
     testingConnection.destroy();
     await app.close();
   });
@@ -54,29 +43,49 @@ describe('UsersController (e2e)', () => {
     it('returns 2 users', async () => {
       // await Tester.hasUser({});
       // await Tester.hasUser({});
-      return request(app.getHttpServer())
-        .get('/users')
-        .expect(200)
-        .expect([
-          {
-            firstName: 'John',
-            lastName: 'Doe',
-            email: 'john@doe.com',
-            isAdmin: true,
-          },
-          {
-            firstName: 'Jane',
-            lastName: 'Donald',
-            email: 'jane@donald.com',
-            isAdmin: false,
-          },
-        ]);
+      await testingTransaction.table('users').insert([
+        {
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'john@doe.com',
+          password: 'asd',
+          isAdmin: true,
+        },
+        {
+          firstName: 'Jane',
+          lastName: 'Donald',
+          email: 'jane@donald.com',
+          password: 'asd',
+          isAdmin: false,
+        },
+      ]);
+      const results = await request(app.getHttpServer()).get('/users');
+
+      expect(results.statusCode).toBe(200);
+      expect(results.body).toEqual([
+        {
+          id: expect.any(String),
+          firstName: 'John',
+          lastName: 'Doe',
+          email: 'john@doe.com',
+          isAdmin: true,
+          password: 'asd',
+          photoPath: null,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        },
+        {
+          id: expect.any(String),
+          firstName: 'Jane',
+          lastName: 'Donald',
+          email: 'jane@donald.com',
+          isAdmin: false,
+          password: 'asd',
+          photoPath: null,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        },
+      ]);
     });
   });
-  // it('/ (GET)', async () => {
-  //   return request(app.getHttpServer())
-  //     .get('/users')
-  //     .expect(200)
-  //     // .expect('Hello World!');
-  // });
 });
