@@ -1,5 +1,6 @@
-import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TagsModule } from './tags/tags.module';
 import { ThemesModule } from './themes/themes.module';
 import { NotesModule } from './notes/notes.module';
@@ -15,6 +16,11 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ENV === 'production' ? '.env' : `.env.${ENV}`,
+    }),
+    // TODO add global guard for this
+    ThrottlerModule.forRoot({
+      ttl: 60,
+      limit: 10,
     }),
     DatabaseModule,
     AuthModule,

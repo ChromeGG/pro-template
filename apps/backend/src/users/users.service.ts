@@ -1,4 +1,9 @@
-import { Injectable, Inject, Optional } from '@nestjs/common';
+import {
+  Injectable,
+  Inject,
+  Optional,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserModel } from '../database/models/user.model';
@@ -34,7 +39,11 @@ export class UsersService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} user`;
+    const user = await UserModel.query().findById(id);
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
 
   async findByEmail(email: string) {
