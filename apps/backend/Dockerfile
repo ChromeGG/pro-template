@@ -5,13 +5,11 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn add glob rimraf
-
-RUN yarn install --only=development
+RUN npm install --only=development
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
 FROM node:16.3-alpine3.11 as production
 
@@ -22,7 +20,7 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN yarn install --only=production
+RUN npm install --only=production
 
 COPY . .
 
