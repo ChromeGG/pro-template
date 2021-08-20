@@ -23,4 +23,10 @@ export class AppController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @Get('health')
+  getHealth() {
+    // TODO check DB health too
+    return { status: 'OK' };
+  }
 }

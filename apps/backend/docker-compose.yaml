@@ -1,22 +1,26 @@
-version: "3.1"
+version: "3.7"
 services:
-  # backend:
-  #   container_name: backend
-  #   build:
-  #      context: .
-  #      target: production
-  #   command: yarn start:dev
-  #   volumes:
-  #     - .:/usr/src/app
-  #     - /usr/src/app/node_modules
-  #   ports:
-  #     - 3000:3000
-  #     - 9229:9229
-  #   env_file:
-  #     - .env
-  #   networks:
-  #      - webnet
+  main:
+    container_name: main
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: npm run start:dev
+    env_file:
+      - .env
+    networks:
+      - webnet
+    depends_on:
+      - db
+      - db-test
   db:
+    container_name: postgres-database
     image: postgres:13.3
     environment:
       POSTGRES_PASSWORD: my_password
@@ -24,7 +28,12 @@ services:
       POSTGRES_USER: my_user
     ports:
       - 5432:5432
+    networks:
+      - webnet
+    volumes:
+      - pgdata:/var/lib/postgresql/data
   db-test:
+    container_name: postgres-database-test
     image: postgres:13.3
     environment:
       POSTGRES_PASSWORD: test
@@ -32,9 +41,13 @@ services:
       POSTGRES_USER: test
     ports:
       - 5433:5432
+    networks:
+      - webnet
+    volumes:
+      - pgdata:/var/lib/postgresql/test-data
 
 networks:
   webnet:
 
 volumes:
-  api-db:
+  pgdata:
